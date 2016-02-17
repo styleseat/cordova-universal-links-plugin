@@ -24,19 +24,23 @@ module.exports = function(ctx) {
  * @param {Object} cordovaContext - cordova context object
  */
 function run(cordovaContext) {
-  var pluginPreferences = configParser.readPreferences(cordovaContext),
-    platformsList = cordovaContext.opts.platforms;
+  var pluginPreferences = {
+    hosts: [
+      { name: 'bnc.lt' }
+    ]
+  };
+  var platformsList = cordovaContext.opts.platforms;
 
   // if no preferences are found - exit
-  if (pluginPreferences == null) {
-    return;
-  }
+  // if (pluginPreferences == null) {
+  //   return;
+  // }
 
-  // if no host is defined - exit
-  if (pluginPreferences.hosts == null || pluginPreferences.hosts.length == 0) {
-    console.warn('No host is specified in the config.xml. Universal Links plugin is not going to work.');
-    return;
-  }
+  // // if no host is defined - exit
+  // if (pluginPreferences.hosts == null || pluginPreferences.hosts.length == 0) {
+  //   console.warn('No host is specified in the config.xml. Universal Links plugin is not going to work.');
+  //   return;
+  // }
 
   platformsList.forEach(function(platform) {
     switch (platform) {
@@ -82,5 +86,5 @@ function activateUniversalLinksInIos(cordovaContext, pluginPreferences) {
   iosProjectEntitlements.generateAssociatedDomainsEntitlements(cordovaContext, pluginPreferences);
 
   // generate apple-site-association-file
-  iosAppSiteAssociationFile.generate(cordovaContext, pluginPreferences);
+  // iosAppSiteAssociationFile.generate(cordovaContext, pluginPreferences);
 }
